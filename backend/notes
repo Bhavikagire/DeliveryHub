@@ -1,0 +1,84 @@
+User Routes:
+1. User Registration:
+Route: POST /api/users/register
+Request Body:
+json
+Copy code
+{
+  "username": "User123",
+  "email": "user@example.com",
+  "password": "password123",
+  "role": "user"  // "user", "restaurant_owner", or "administrator"
+}
+
+2. User Login:
+Route: POST /api/users/login
+Request Body:
+json
+Copy code
+{
+  "username": "yourUsername",
+  "password": "yourPassword"
+}
+Response:
+json
+Copy code
+{
+  "token": "yourJWTTokenHere"
+}
+Restaurant Routes:
+1. Get All Restaurants:
+Route: GET /api/restaurants
+2. Get Restaurant by ID:
+Route: GET /api/restaurants/{id}
+3. Create Restaurant (Authenticated Route):
+Route: POST /api/restaurants
+Request Body (Example):
+json
+Copy code
+{
+  "name": "Restaurant Name",
+  "cuisine": "Cuisine Type",
+  "description": "Restaurant Description",
+  "address": {
+    "street": "Street Name",
+    "city": "City Name",
+    "state": "State Name",
+    "zip": "Zip Code"
+  },
+  "phone": "123-456-7890",
+  "website": "http://www.restaurant.com"
+}
+Headers:
+Authorization: Bearer yourJWTTokenHere
+4. Add Review to Restaurant (Authenticated Route):
+Route: POST /api/restaurants/{id}/reviews
+Request Body (Example):
+json
+Copy code
+{
+  "comment": "Great food!",
+  "rating": 5
+}
+Headers:
+Authorization: Bearer yourJWTTokenHere
+
+
+2. Test User Profile Routes:
+a. Retrieve User Profile:
+Make a GET request to http://localhost:3000/api/userProfile/profile.
+Include the JWT token in the Authorization header.
+The response should contain user profile details.
+b. Update User Profile:
+Make a PATCH request to http://localhost:3000/api/userProfile/profile.
+Include the JWT token in the Authorization header.
+Request Body (Example):
+json
+Copy code
+{
+  "username": "newUsername",
+  "email": "newEmail@example.com"
+}
+The response should contain the updated user profile details.
+3. Error Scenarios:
+Test error scenarios such as providing an invalid token, missing fields in the request body, or attempting to update the profile with an existing username or email.
