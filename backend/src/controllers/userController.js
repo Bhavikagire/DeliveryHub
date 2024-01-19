@@ -45,7 +45,7 @@ const loginUser = async (req, res) => {
     }
 
     // Generate an access token with expiration (1 hour)
-    const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1m' });
+    const accessToken = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
     // Generate a refresh token with expiration (7 days)
     // src/controllers/userController.js

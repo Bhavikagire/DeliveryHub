@@ -12,7 +12,7 @@ const getRestaurants = async (req, res) => {
 
 const createRestaurant = async (req, res) => {
   try {
-    const { name, cuisine, description, address, phone, website } = req.body;
+    const { name, cuisine, description, address,images, phone, website } = req.body;
 
     // Create a new restaurant
     const newRestaurant = new Restaurant({
@@ -20,6 +20,7 @@ const createRestaurant = async (req, res) => {
       cuisine,
       description,
       address,
+      images,
       phone,
       website,
     });
@@ -57,7 +58,7 @@ const getRestaurantById = async (req, res) => {
 const updateRestaurant = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, cuisine, description, address, phone, website } = req.body;
+    const { name, cuisine, description, address,images, phone, website } = req.body;
 
     // Find the restaurant by ID and update its details
     const updatedRestaurant = await Restaurant.findByIdAndUpdate(
@@ -67,6 +68,7 @@ const updateRestaurant = async (req, res) => {
         cuisine,
         description,
         address,
+        images,
         phone,
         website,
       },

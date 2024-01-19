@@ -32,6 +32,10 @@ const restaurantSchema = new mongoose.Schema({
       required: true,
     },
   },
+  images:{
+    type: String,
+    required: true,
+  },
   phone: {
     type: String,
     required: true,
@@ -56,6 +60,8 @@ const restaurantSchema = new mongoose.Schema({
       },
     },
   ],
+
+
  
 });
 
