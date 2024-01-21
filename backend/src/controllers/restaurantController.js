@@ -1,18 +1,41 @@
-// src/controllers/restaurantController.js
 const Restaurant = require('../models/Restaurant');
 
 const getRestaurants = async (req, res) => {
   try {
-    const restaurants = await Restaurant.find();
+    const { searchQuery, cuisine, location, rating } = req.query;
+
+    // Start with all restaurants
+    let restaurants = await Restaurant.find();
+
+    // Filter by search query
+    if (searchQuery) {
+      const searchRegex = new RegExp(searchQuery, 'i'); // Case-insensitive search
+      restaurants = restaurants.filter(restaurant => searchRegex.test(restaurant.name));
+    }
+
+    // Filter by cuisine
+    if (cuisine) {
+      restaurants = restaurants.filter(restaurant => restaurant.cuisine === cuisine);
+    }
+
+    // Add more filters as needed (location, rating, etc.)
+
     res.json(restaurants);
   } catch (error) {
+    console.error('Error fetching restaurants:', error.message);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
+
 const createRestaurant = async (req, res) => {
   try {
-    const { name, cuisine, description, address,images, phone, website } = req.body;
+    const { name, cuisine, description, address, images, phone, website, menu } = req.body;
+
+    // Validate menu structure
+    if (!Array.isArray(menu) || menu.some(item => typeof item !== 'object')) {
+      return res.status(400).json({ error: 'Invalid menu structure' });
+    }
 
     // Create a new restaurant
     const newRestaurant = new Restaurant({
@@ -23,6 +46,7 @@ const createRestaurant = async (req, res) => {
       images,
       phone,
       website,
+      menu,
     });
 
     // Save the restaurant to the database
@@ -35,7 +59,6 @@ const createRestaurant = async (req, res) => {
   }
 };
 
-// src/controllers/restaurantController.js
 const getRestaurantById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -54,11 +77,15 @@ const getRestaurantById = async (req, res) => {
   }
 };
 
-// src/controllers/restaurantController.js
 const updateRestaurant = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, cuisine, description, address,images, phone, website } = req.body;
+    const { name, cuisine, description, address, images, phone, website, menu } = req.body;
+
+    // Validate menu structure
+    if (!Array.isArray(menu) || menu.some(item => typeof item !== 'object')) {
+      return res.status(400).json({ error: 'Invalid menu structure' });
+    }
 
     // Find the restaurant by ID and update its details
     const updatedRestaurant = await Restaurant.findByIdAndUpdate(
@@ -71,6 +98,7 @@ const updateRestaurant = async (req, res) => {
         images,
         phone,
         website,
+        menu,
       },
       { new: true } // Return the updated restaurant
     );
@@ -86,7 +114,6 @@ const updateRestaurant = async (req, res) => {
   }
 };
 
-// src/controllers/restaurantController.js
 const deleteRestaurant = async (req, res) => {
   try {
     const { id } = req.params;
@@ -105,7 +132,6 @@ const deleteRestaurant = async (req, res) => {
   }
 };
 
-// src/controllers/restaurantController.js
 const addReviewToRestaurant = async (req, res) => {
   try {
     const { comment, rating } = req.body;
@@ -152,5 +178,3 @@ module.exports = {
   deleteRestaurant,
   addReviewToRestaurant,
 };
-
-

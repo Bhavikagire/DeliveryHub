@@ -12,11 +12,11 @@ console.log("going till token headers")
   }
   
   try {
-    
+    console.log("showing after try  here")
     console.log('Token Value:', token);
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-   
+    console.log("showing no decoded here")
     req.user = decoded;
     
     // Check user role for authorization
