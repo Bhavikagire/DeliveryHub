@@ -1,5 +1,22 @@
-// src/models/Restaurant.js
 const mongoose = require('mongoose');
+
+const menuSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  description: {
+    type: String,
+  },
+  image: {
+    type: String, // Assuming the image is stored as a URL
+  },
+  
+});
 
 const restaurantSchema = new mongoose.Schema({
   name: {
@@ -32,7 +49,7 @@ const restaurantSchema = new mongoose.Schema({
       required: true,
     },
   },
-  images:{
+  images: {
     type: String,
     required: true,
   },
@@ -60,9 +77,7 @@ const restaurantSchema = new mongoose.Schema({
       },
     },
   ],
-
-
- 
+  menu: [menuSchema], // Include the menu as an array of menuSchema objects
 });
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);

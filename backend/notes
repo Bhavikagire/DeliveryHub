@@ -46,6 +46,7 @@ Copy code
     "state": "State Name",
     "zip": "Zip Code"
   },
+  "images":"https://thumbs.dreamstime.com/b/neon-cafe-sign-22809403.jpg?w=768",
   "phone": "123-456-7890",
   "website": "http://www.restaurant.com"
 }
@@ -82,3 +83,10 @@ Copy code
 The response should contain the updated user profile details.
 3. Error Scenarios:
 Test error scenarios such as providing an invalid token, missing fields in the request body, or attempting to update the profile with an existing username or email.
+
+http://localhost:8000/api/add
+{
+  "userId": "65a8d57c998e29c6ad68f68b",  
+  "name": "Spaghetti", 
+  "price": 10.99        
+}
